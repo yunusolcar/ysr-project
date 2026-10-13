@@ -1,0 +1,1409 @@
+{
+ "sections": [
+  {
+   "code": "bolum-1",
+   "title": "İlgi Alanları, Arkadaşlık ve Okul",
+   "instructions": "",
+   "order": 1
+  },
+  {
+   "code": "bolum-2",
+   "title": "Sorun Maddeleri",
+   "instructions": "Aşağıda gençleri tanımlayan maddeler var. Şu anda ya da son 6 ay içinde sana uyan her madde için: çok doğru ya da sık sık doğruysa 2'yi, biraz ya da bazen doğruysa 1'i, doğru değilse 0'ı seç.",
+   "order": 2
+  }
+ ],
+ "questions": [
+  {
+   "section": "bolum-1",
+   "code": "I",
+   "order": 1,
+   "text": "En çok katılmaktan hoşlandığın sporları yaz. Örneğin: yüzme, futbol, basketbol, voleybol, kaykay, bisiklete binme, balık tutma vb.",
+   "question_type": "activity_list",
+   "options": {
+    "max_items": 3,
+    "allow_none": true,
+    "item_label": "Spor",
+    "ratings": [
+     {
+      "key": "time",
+      "label": "Yaşıtlarına oranla her birine ne kadar zaman ayırırsın?",
+      "choices": [
+       {
+        "value": 0,
+        "label": "Ortalamadan az"
+       },
+       {
+        "value": 1,
+        "label": "Ortalama"
+       },
+       {
+        "value": 2,
+        "label": "Ortalamadan fazla"
+       }
+      ]
+     },
+     {
+      "key": "skill",
+      "label": "Yaşıtlarına oranla her birinde ne kadar başarılısın?",
+      "choices": [
+       {
+        "value": 0,
+        "label": "Ortalamanın altında"
+       },
+       {
+        "value": 1,
+        "label": "Ortalama"
+       },
+       {
+        "value": 2,
+        "label": "Ortalamanın üstünde"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "section": "bolum-1",
+   "code": "II",
+   "order": 2,
+   "text": "Spor dışındaki en sevdiğin hobileri, etkinlikleri ve oyunları yaz. Örneğin: video oyunları, kart oyunları, kitap okumak, piyano, arabalar, bilgisayar, el işi vb. (Radyo dinlemeyi, televizyon izlemeyi ya da diğer medyayı sayma.)",
+   "question_type": "activity_list",
+   "options": {
+    "max_items": 3,
+    "allow_none": true,
+    "item_label": "Hobi / etkinlik",
+    "ratings": [
+     {
+      "key": "time",
+      "label": "Yaşıtlarına oranla her birine ne kadar zaman ayırırsın?",
+      "choices": [
+       {
+        "value": 0,
+        "label": "Ortalamadan az"
+       },
+       {
+        "value": 1,
+        "label": "Ortalama"
+       },
+       {
+        "value": 2,
+        "label": "Ortalamadan fazla"
+       }
+      ]
+     },
+     {
+      "key": "skill",
+      "label": "Yaşıtlarına oranla her birinde ne kadar başarılısın?",
+      "choices": [
+       {
+        "value": 0,
+        "label": "Ortalamanın altında"
+       },
+       {
+        "value": 1,
+        "label": "Ortalama"
+       },
+       {
+        "value": 2,
+        "label": "Ortalamanın üstünde"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "section": "bolum-1",
+   "code": "III",
+   "order": 3,
+   "text": "Üyesi olduğun örgütleri, kulüpleri, takımları ya da grupları yaz.",
+   "question_type": "activity_list",
+   "options": {
+    "max_items": 3,
+    "allow_none": true,
+    "item_label": "Kulüp / grup",
+    "ratings": [
+     {
+      "key": "active",
+      "label": "Yaşıtlarına oranla her birinde ne kadar aktifsin?",
+      "choices": [
+       {
+        "value": 0,
+        "label": "Daha az aktif"
+       },
+       {
+        "value": 1,
+        "label": "Ortalama"
+       },
+       {
+        "value": 2,
+        "label": "Daha aktif"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "section": "bolum-1",
+   "code": "IV",
+   "order": 4,
+   "text": "Yaptığın işleri ya da ev işlerini yaz. Örneğin: bulaşık yıkamak, bebek bakıcılığı, yatak toplamak, bir dükkânda çalışmak vb. (Hem ücretli hem ücretsiz işleri ve görevleri say.)",
+   "question_type": "activity_list",
+   "options": {
+    "max_items": 3,
+    "allow_none": true,
+    "item_label": "İş / görev",
+    "ratings": [
+     {
+      "key": "skill",
+      "label": "Yaşıtlarına oranla bunları ne kadar iyi yaparsın?",
+      "choices": [
+       {
+        "value": 0,
+        "label": "Ortalamanın altında"
+       },
+       {
+        "value": 1,
+        "label": "Ortalama"
+       },
+       {
+        "value": 2,
+        "label": "Ortalamanın üstünde"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "section": "bolum-1",
+   "code": "V.1",
+   "order": 5,
+   "text": "Yaklaşık kaç yakın arkadaşın var? (Kardeşlerini sayma.)",
+   "question_type": "single_choice",
+   "options": [
+    {
+     "value": 0,
+     "label": "Hiç yok"
+    },
+    {
+     "value": 1,
+     "label": "1"
+    },
+    {
+     "value": 2,
+     "label": "2 ya da 3"
+    },
+    {
+     "value": 3,
+     "label": "4 ya da fazla"
+    }
+   ]
+  },
+  {
+   "section": "bolum-1",
+   "code": "V.2",
+   "order": 6,
+   "text": "Okul saatleri dışında haftada yaklaşık kaç kez arkadaşlarınla bir şeyler yaparsın? (Kardeşlerini sayma.)",
+   "question_type": "single_choice",
+   "options": [
+    {
+     "value": 0,
+     "label": "1'den az"
+    },
+    {
+     "value": 1,
+     "label": "1 ya da 2"
+    },
+    {
+     "value": 2,
+     "label": "3 ya da fazla"
+    }
+   ]
+  },
+  {
+   "section": "bolum-1",
+   "code": "VI",
+   "order": 7,
+   "text": "Yaşıtlarına oranla şunları ne kadar iyi yaparsın:",
+   "question_type": "single_choice",
+   "is_header": true
+  },
+  {
+   "section": "bolum-1",
+   "code": "VI.a",
+   "order": 8,
+   "text": "Kardeşlerinle iyi geçinmek",
+   "question_type": "single_choice",
+   "parent": "VI",
+   "options": [
+    {
+     "value": 0,
+     "label": "Daha kötü"
+    },
+    {
+     "value": 1,
+     "label": "Ortalama"
+    },
+    {
+     "value": 2,
+     "label": "Daha iyi"
+    },
+    {
+     "value": 9,
+     "label": "Kardeşim yok"
+    }
+   ]
+  },
+  {
+   "section": "bolum-1",
+   "code": "VI.b",
+   "order": 9,
+   "text": "Diğer çocuklarla iyi geçinmek",
+   "question_type": "single_choice",
+   "parent": "VI",
+   "options": [
+    {
+     "value": 0,
+     "label": "Daha kötü"
+    },
+    {
+     "value": 1,
+     "label": "Ortalama"
+    },
+    {
+     "value": 2,
+     "label": "Daha iyi"
+    }
+   ]
+  },
+  {
+   "section": "bolum-1",
+   "code": "VI.c",
+   "order": 10,
+   "text": "Anne babanla iyi geçinmek",
+   "question_type": "single_choice",
+   "parent": "VI",
+   "options": [
+    {
+     "value": 0,
+     "label": "Daha kötü"
+    },
+    {
+     "value": 1,
+     "label": "Ortalama"
+    },
+    {
+     "value": 2,
+     "label": "Daha iyi"
+    }
+   ]
+  },
+  {
+   "section": "bolum-1",
+   "code": "VI.d",
+   "order": 11,
+   "text": "İşleri kendi başına yapmak",
+   "question_type": "single_choice",
+   "parent": "VI",
+   "options": [
+    {
+     "value": 0,
+     "label": "Daha kötü"
+    },
+    {
+     "value": 1,
+     "label": "Ortalama"
+    },
+    {
+     "value": 2,
+     "label": "Daha iyi"
+    }
+   ]
+  },
+  {
+   "section": "bolum-1",
+   "code": "VII.0",
+   "order": 12,
+   "text": "Okula devam ediyor musun?",
+   "question_type": "single_choice",
+   "options": [
+    {
+     "value": 1,
+     "label": "Evet"
+    },
+    {
+     "value": 0,
+     "label": "Hayır"
+    }
+   ],
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-1",
+   "code": "VII.1",
+   "order": 13,
+   "text": "Okul derslerindeki başarın. Aldığın her ders için bir seçenek işaretle.",
+   "question_type": "single_choice",
+   "is_header": true
+  },
+  {
+   "section": "bolum-1",
+   "code": "VII.1a",
+   "order": 14,
+   "text": "Türkçe ve Edebiyat",
+   "question_type": "single_choice",
+   "parent": "VII.1",
+   "options": [
+    {
+     "value": 0,
+     "label": "Başarısız"
+    },
+    {
+     "value": 1,
+     "label": "Ortalamanın altında"
+    },
+    {
+     "value": 2,
+     "label": "Ortalama"
+    },
+    {
+     "value": 3,
+     "label": "Ortalamanın üstünde"
+    }
+   ]
+  },
+  {
+   "section": "bolum-1",
+   "code": "VII.1b",
+   "order": 15,
+   "text": "Tarih ya da Sosyal Bilgiler",
+   "question_type": "single_choice",
+   "parent": "VII.1",
+   "options": [
+    {
+     "value": 0,
+     "label": "Başarısız"
+    },
+    {
+     "value": 1,
+     "label": "Ortalamanın altında"
+    },
+    {
+     "value": 2,
+     "label": "Ortalama"
+    },
+    {
+     "value": 3,
+     "label": "Ortalamanın üstünde"
+    }
+   ]
+  },
+  {
+   "section": "bolum-1",
+   "code": "VII.1c",
+   "order": 16,
+   "text": "Matematik",
+   "question_type": "single_choice",
+   "parent": "VII.1",
+   "options": [
+    {
+     "value": 0,
+     "label": "Başarısız"
+    },
+    {
+     "value": 1,
+     "label": "Ortalamanın altında"
+    },
+    {
+     "value": 2,
+     "label": "Ortalama"
+    },
+    {
+     "value": 3,
+     "label": "Ortalamanın üstünde"
+    }
+   ]
+  },
+  {
+   "section": "bolum-1",
+   "code": "VII.1d",
+   "order": 17,
+   "text": "Fen Bilimleri",
+   "question_type": "single_choice",
+   "parent": "VII.1",
+   "options": [
+    {
+     "value": 0,
+     "label": "Başarısız"
+    },
+    {
+     "value": 1,
+     "label": "Ortalamanın altında"
+    },
+    {
+     "value": 2,
+     "label": "Ortalama"
+    },
+    {
+     "value": 3,
+     "label": "Ortalamanın üstünde"
+    }
+   ]
+  },
+  {
+   "section": "bolum-1",
+   "code": "VII.1e",
+   "order": 18,
+   "text": "Diğer akademik dersler. Örneğin: bilgisayar, yabancı dil, işletme. (Beden eğitimi, atölye, direksiyon eğitimi ya da diğer akademik olmayan dersleri sayma.)",
+   "question_type": "activity_list",
+   "parent": "VII.1",
+   "options": {
+    "max_items": 3,
+    "allow_none": true,
+    "item_label": "Ders",
+    "ratings": [
+     {
+      "key": "grade",
+      "label": "Bu dersteki başarın nasıl?",
+      "choices": [
+       {
+        "value": 0,
+        "label": "Başarısız"
+       },
+       {
+        "value": 1,
+        "label": "Ortalamanın altında"
+       },
+       {
+        "value": 2,
+        "label": "Ortalama"
+       },
+       {
+        "value": 3,
+        "label": "Ortalamanın üstünde"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "section": "bolum-1",
+   "code": "VII.2",
+   "order": 19,
+   "text": "Herhangi bir hastalığın, engelin ya da sakatlığın var mı?",
+   "question_type": "single_choice",
+   "options": [
+    {
+     "value": 0,
+     "label": "Hayır"
+    },
+    {
+     "value": 1,
+     "label": "Evet"
+    }
+   ],
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-1",
+   "code": "VII.3",
+   "order": 20,
+   "text": "Okulla ilgili endişelerini ya da sorunlarını anlat:",
+   "question_type": "free_text"
+  },
+  {
+   "section": "bolum-1",
+   "code": "VII.4",
+   "order": 21,
+   "text": "Başka endişelerin varsa anlat:",
+   "question_type": "free_text"
+  },
+  {
+   "section": "bolum-1",
+   "code": "VII.5",
+   "order": 22,
+   "text": "Kendinle ilgili en iyi şeyleri anlat:",
+   "question_type": "free_text"
+  },
+  {
+   "section": "bolum-2",
+   "code": "1",
+   "order": 1010,
+   "text": "Yaşıma göre çocuksu davranırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "2",
+   "order": 1020,
+   "text": "Ailemin izni olmadan alkol içerim",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "3",
+   "order": 1030,
+   "text": "Çok tartışırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "4",
+   "order": 1040,
+   "text": "Başladığım işleri bitiremem",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "5",
+   "order": 1050,
+   "text": "Keyif aldığım çok az şey vardır",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "6",
+   "order": 1060,
+   "text": "Hayvanları severim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "7",
+   "order": 1070,
+   "text": "Övünürüm",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "8",
+   "order": 1080,
+   "text": "Dikkatimi toplamakta ya da dikkat vermekte zorlanırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "9",
+   "order": 1090,
+   "text": "Bazı düşünceleri aklımdan çıkaramam",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "10",
+   "order": 1100,
+   "text": "Yerimde oturmakta zorlanırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "11",
+   "order": 1110,
+   "text": "Yetişkinlere fazla bağımlıyımdır",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "12",
+   "order": 1120,
+   "text": "Kendimi yalnız hissederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "13",
+   "order": 1130,
+   "text": "Kafamın karışık ya da sisli olduğunu hissederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "14",
+   "order": 1140,
+   "text": "Çok ağlarım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "15",
+   "order": 1150,
+   "text": "Oldukça dürüstümdür",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "16",
+   "order": 1160,
+   "text": "Başkalarına karşı kötü davranırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "17",
+   "order": 1170,
+   "text": "Çok hayale dalarım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "18",
+   "order": 1180,
+   "text": "Bilerek kendimi yaralamaya ya da öldürmeye çalışırım",
+   "question_type": "scale_012",
+   "is_critical": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "19",
+   "order": 1190,
+   "text": "Çok dikkat çekmeye çalışırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "20",
+   "order": 1200,
+   "text": "Kendi eşyalarıma zarar veririm",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "21",
+   "order": 1210,
+   "text": "Başkalarına ait eşyalara zarar veririm",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "22",
+   "order": 1220,
+   "text": "Anne babamın sözünü dinlemem",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "23",
+   "order": 1230,
+   "text": "Okulda söz dinlemem",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "24",
+   "order": 1240,
+   "text": "Yemem gerektiği kadar iyi yemek yemem",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "25",
+   "order": 1250,
+   "text": "Diğer çocuklarla anlaşamam",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "26",
+   "order": 1260,
+   "text": "Yapmamam gereken bir şeyi yaptıktan sonra suçluluk duymam",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "27",
+   "order": 1270,
+   "text": "Başkalarını kıskanırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "28",
+   "order": 1280,
+   "text": "Evde, okulda ya da başka yerlerde kuralları çiğnerim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "29",
+   "order": 1290,
+   "text": "Okul dışında bazı hayvanlardan, durumlardan ya da yerlerden korkarım",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "30",
+   "order": 1300,
+   "text": "Okula gitmekten korkarım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "31",
+   "order": 1310,
+   "text": "Kötü bir şey düşünebileceğimden ya da yapabileceğimden korkarım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "32",
+   "order": 1320,
+   "text": "Mükemmel olmam gerektiğini hissederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "33",
+   "order": 1330,
+   "text": "Kimsenin beni sevmediğini hissederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "34",
+   "order": 1340,
+   "text": "Başkalarının bana zarar vermek istediğini hissederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "35",
+   "order": 1350,
+   "text": "Kendimi değersiz ya da aşağı hissederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "36",
+   "order": 1360,
+   "text": "Kazayla sık sık yaralanırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "37",
+   "order": 1370,
+   "text": "Çok kavga ederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "38",
+   "order": 1380,
+   "text": "Benimle çok dalga geçilir",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "39",
+   "order": 1390,
+   "text": "Başı belaya giren çocuklarla takılırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "40",
+   "order": 1400,
+   "text": "Başkalarının orada olmadığını düşündüğü sesler ya da konuşmalar duyarım",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "41",
+   "order": 1410,
+   "text": "Durup düşünmeden hareket ederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "42",
+   "order": 1420,
+   "text": "Başkalarıyla birlikte olmaktansa yalnız olmayı tercih ederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "43",
+   "order": 1430,
+   "text": "Yalan söylerim ya da hile yaparım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "44",
+   "order": 1440,
+   "text": "Tırnaklarımı yerim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "45",
+   "order": 1450,
+   "text": "Sinirli ya da gerginimdir",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "46",
+   "order": 1460,
+   "text": "Vücudumun bazı yerleri seyirir ya da sinirsel hareketler yapar",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "47",
+   "order": 1470,
+   "text": "Kâbuslar görürüm",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "48",
+   "order": 1480,
+   "text": "Diğer çocuklar tarafından sevilmem",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "49",
+   "order": 1490,
+   "text": "Bazı şeyleri çoğu çocuktan daha iyi yapabilirim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "50",
+   "order": 1500,
+   "text": "Çok korkak ya da kaygılıyımdır",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "51",
+   "order": 1510,
+   "text": "Başım döner ya da sersemlik hissederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "52",
+   "order": 1520,
+   "text": "Kendimi çok suçlu hissederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "53",
+   "order": 1530,
+   "text": "Çok fazla yerim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "54",
+   "order": 1540,
+   "text": "Makul bir neden olmadan kendimi aşırı yorgun hissederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "55",
+   "order": 1550,
+   "text": "Fazla kiloluyum",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "56",
+   "order": 1560,
+   "text": "Bilinen tıbbi bir nedeni olmayan bedensel sorunlar:",
+   "question_type": "scale_012",
+   "is_header": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "56a",
+   "order": 1561,
+   "text": "Ağrılar ve sızılar (mide ağrısı ve baş ağrısı hariç)",
+   "question_type": "scale_012",
+   "parent": "56"
+  },
+  {
+   "section": "bolum-2",
+   "code": "56b",
+   "order": 1562,
+   "text": "Baş ağrıları",
+   "question_type": "scale_012",
+   "parent": "56"
+  },
+  {
+   "section": "bolum-2",
+   "code": "56c",
+   "order": 1563,
+   "text": "Mide bulantısı, kendini hasta hissetme",
+   "question_type": "scale_012",
+   "parent": "56"
+  },
+  {
+   "section": "bolum-2",
+   "code": "56d",
+   "order": 1564,
+   "text": "Gözle ilgili sorunlar (gözlükle düzeltilenler hariç)",
+   "question_type": "scale_012",
+   "parent": "56",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "56e",
+   "order": 1565,
+   "text": "Döküntüler ya da diğer cilt sorunları",
+   "question_type": "scale_012",
+   "parent": "56"
+  },
+  {
+   "section": "bolum-2",
+   "code": "56f",
+   "order": 1566,
+   "text": "Mide ağrıları",
+   "question_type": "scale_012",
+   "parent": "56"
+  },
+  {
+   "section": "bolum-2",
+   "code": "56g",
+   "order": 1567,
+   "text": "Kusma",
+   "question_type": "scale_012",
+   "parent": "56"
+  },
+  {
+   "section": "bolum-2",
+   "code": "56h",
+   "order": 1568,
+   "text": "Diğer",
+   "question_type": "scale_012",
+   "parent": "56",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "57",
+   "order": 1570,
+   "text": "İnsanlara fiziksel olarak saldırırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "58",
+   "order": 1580,
+   "text": "Cildimi ya da vücudumun diğer bölgelerini yolar ya da kurcalarım",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "59",
+   "order": 1590,
+   "text": "Oldukça arkadaş canlısı olabilirim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "60",
+   "order": 1600,
+   "text": "Yeni şeyler denemeyi severim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "61",
+   "order": 1610,
+   "text": "Okul başarım düşüktür",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "62",
+   "order": 1620,
+   "text": "Koordinasyonum zayıftır ya da sakarımdır",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "63",
+   "order": 1630,
+   "text": "Yaşıtlarımdan çok daha büyük çocuklarla birlikte olmayı tercih ederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "64",
+   "order": 1640,
+   "text": "Yaşıtlarımdan çok daha küçük çocuklarla birlikte olmayı tercih ederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "65",
+   "order": 1650,
+   "text": "Konuşmayı reddederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "66",
+   "order": 1660,
+   "text": "Bazı hareketleri tekrar tekrar yaparım",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "67",
+   "order": 1670,
+   "text": "Evden kaçarım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "68",
+   "order": 1680,
+   "text": "Çok bağırırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "69",
+   "order": 1690,
+   "text": "Gizli davranırım ya da bazı şeyleri kendime saklarım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "70",
+   "order": 1700,
+   "text": "Başkalarının orada olmadığını düşündüğü şeyler görürüm",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "71",
+   "order": 1710,
+   "text": "Sıkılgan biriyim ya da kolayca utanırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "72",
+   "order": 1720,
+   "text": "Yangın çıkarırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "73",
+   "order": 1730,
+   "text": "Ellerimle iyi iş yapabilirim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "74",
+   "order": 1740,
+   "text": "Gösteriş yaparım ya da soytarılık ederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "75",
+   "order": 1750,
+   "text": "Çok utangaç ya da çekingenimdir",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "76",
+   "order": 1760,
+   "text": "Çoğu çocuktan daha az uyurum",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "77",
+   "order": 1770,
+   "text": "Gündüz ve/veya gece çoğu çocuktan daha fazla uyurum",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "78",
+   "order": 1780,
+   "text": "Dikkatsizimdir ya da dikkatim kolayca dağılır",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "79",
+   "order": 1790,
+   "text": "Konuşma sorunum vardır",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "80",
+   "order": 1800,
+   "text": "Haklarımı savunurum",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "81",
+   "order": 1810,
+   "text": "Evde bir şeyler çalarım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "82",
+   "order": 1820,
+   "text": "Ev dışındaki yerlerden bir şeyler çalarım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "83",
+   "order": 1830,
+   "text": "İhtiyacım olmayan çok fazla şey biriktiririm",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "84",
+   "order": 1840,
+   "text": "Başkalarının tuhaf bulduğu şeyler yaparım",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "85",
+   "order": 1850,
+   "text": "Başkalarının tuhaf bulacağı düşüncelerim vardır",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "86",
+   "order": 1860,
+   "text": "İnatçıyımdır",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "87",
+   "order": 1870,
+   "text": "Ruh halim ya da duygularım aniden değişir",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "88",
+   "order": 1880,
+   "text": "İnsanlarla birlikte olmaktan hoşlanırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "89",
+   "order": 1890,
+   "text": "Şüpheciyimdir",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "90",
+   "order": 1900,
+   "text": "Küfreder ya da kaba sözler kullanırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "91",
+   "order": 1910,
+   "text": "Kendimi öldürmeyi düşünürüm",
+   "question_type": "scale_012",
+   "is_critical": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "92",
+   "order": 1920,
+   "text": "Başkalarını güldürmeyi severim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "93",
+   "order": 1930,
+   "text": "Çok konuşurum",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "94",
+   "order": 1940,
+   "text": "Başkalarıyla çok alay ederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "95",
+   "order": 1950,
+   "text": "Çabuk öfkelenirim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "96",
+   "order": 1960,
+   "text": "Cinsellik hakkında çok fazla düşünürüm",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "97",
+   "order": 1970,
+   "text": "İnsanlara zarar vermekle tehdit ederim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "98",
+   "order": 1980,
+   "text": "Başkalarına yardım etmeyi severim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "99",
+   "order": 1990,
+   "text": "Sigara içerim, tütün çiğnerim ya da koklarım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "100",
+   "order": 2000,
+   "text": "Uyku sorunum vardır",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "101",
+   "order": 2010,
+   "text": "Derslerden kaçarım ya da okulu asarım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "102",
+   "order": 2020,
+   "text": "Enerjim fazla yoktur",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "103",
+   "order": 2030,
+   "text": "Mutsuzum, üzgünüm ya da depresifim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "104",
+   "order": 2040,
+   "text": "Diğer çocuklardan daha gürültülüyümdür",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "105",
+   "order": 2050,
+   "text": "Tıbbi olmayan amaçlarla uyuşturucu madde kullanırım (alkol ve tütün hariç)",
+   "question_type": "scale_012",
+   "allows_explanation": true
+  },
+  {
+   "section": "bolum-2",
+   "code": "106",
+   "order": 2060,
+   "text": "Başkalarına adil davranmayı severim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "107",
+   "order": 2070,
+   "text": "İyi bir şakadan hoşlanırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "108",
+   "order": 2080,
+   "text": "Hayatı rahat almayı severim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "109",
+   "order": 2090,
+   "text": "Elimden geldiğinde başkalarına yardım etmeye çalışırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "110",
+   "order": 2100,
+   "text": "Karşı cinsten biri olmayı isterdim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "111",
+   "order": 2110,
+   "text": "Başkalarıyla ilişki kurmaktan kaçınırım",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "112",
+   "order": 2120,
+   "text": "Çok endişelenirim",
+   "question_type": "scale_012"
+  },
+  {
+   "section": "bolum-2",
+   "code": "END",
+   "order": 3000,
+   "text": "Duygularını, davranışlarını ya da ilgi alanlarını anlatan başka bir şey varsa yaz:",
+   "question_type": "free_text"
+  }
+ ]
+}
