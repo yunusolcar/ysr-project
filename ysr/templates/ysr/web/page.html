@@ -1,0 +1,133 @@
+{% extends "ysr/web/base.html" %} {% block content %}
+<p class="muted">
+  Sayfa {{ page_number }} / {{ total_pages }} · {{ progress.answered }} / {{
+  progress.total }} soru cevaplandı
+</p>
+<div class="progress"><div style="width: {{ percent }}%"></div></div>
+
+<h2>{{ title }}</h2>
+{% if instructions %}
+<p>{{ instructions }}</p>
+{% endif %} {% if has_scale %}
+<p class="legend">
+  <b>0</b> = Doğru değil &nbsp;·&nbsp; <b>1</b> = Biraz ya da bazen doğru
+  &nbsp;·&nbsp; <b>2</b> = Çok ya da sık sık doğru
+</p>
+{% endif %} {% if error_count %}
+<p class="error">
+  Cevaplanmamış ya da hatalı sorular var. Kırmızı çizgili soruları kontrol et.
+</p>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %} {% for c in cards %} {% if c.header %}
+  <p class="q-header">
+    {% if c.show_code %}<span class="code">{{ c.code }}.</span>{% endif %}{{
+    c.text }}
+  </p>
+  {% else %}
+  <div
+    class="q {% if c.depth %}child{% endif %} {% if c.error %}has-error{% endif %}"
+  >
+    <p class="q-text">
+      {% if c.show_code %}<span class="code">{{ c.code }}.</span>{% endif %}{{
+      c.text }}
+    </p>
+
+    {% if c.kind == "scale" or c.kind == "choice" %}
+    <div class="choices">
+      {% for ch in c.choices %}
+      <label
+        ><input
+          type="radio"
+          name="{{ c.field }}_value"
+          value="{{ ch.value }}"
+          {%
+          if
+          ch.checked
+          %}checked{%
+          endif
+          %}
+        /><span>{{ ch.label }}</span></label
+      >
+      {% endfor %}
+    </div>
+    {% if c.explain %}<input
+      type="text"
+      name="{{ c.field }}_text"
+      value="{{ c.text_value }}"
+      placeholder="Açıklamak istersen yaz"
+      maxlength="2000"
+    />{% endif %} {% elif c.kind == "text" %}
+    <textarea name="{{ c.field }}_text" rows="4" maxlength="2000">
+{{ c.text_value }}</textarea
+    >
+
+    {% elif c.kind == "list" %}
+    <label
+      ><input
+        type="checkbox"
+        name="{{ c.field }}_none"
+        {%
+        if
+        c.none
+        %}checked{%
+        endif
+        %}
+      />
+      Hiçbiri</label
+    >
+    {% for row in c.rows %}
+    <fieldset class="row">
+      <input
+        type="text"
+        name="{{ row.name_field }}"
+        value="{{ row.name }}"
+        placeholder="{{ row.index }}. yazmak istersen buraya"
+        maxlength="100"
+      />
+      <div class="selects">
+        {% for s in row.selects %}
+        <label
+          >{{ s.label }}
+          <select name="{{ s.field }}">
+            <option value="">Seç</option>
+            {% for o in s.options %}
+            <option
+              value="{{ o.value }}"
+              {%
+              if
+              o.selected
+              %}selected{%
+              endif
+              %}
+            >
+              {{ o.label }}
+            </option>
+            {% endfor %}
+          </select>
+        </label>
+        {% endfor %}
+      </div>
+    </fieldset>
+    {% endfor %} {% endif %} {% if c.error %}
+    <p class="error">{{ c.error }}</p>
+    {% endif %}
+  </div>
+  {% endif %} {% endfor %}
+
+  <div class="nav">
+    <button class="btn" type="submit">
+      {% if is_last %}Testi bitir{% else %}Devam →{% endif %}
+    </button>
+    {% if has_back %}<button
+      class="btn secondary"
+      type="submit"
+      name="nav"
+      value="prev"
+    >
+      ← Geri</button
+    >{% endif %}
+  </div>
+</form>
+{% endblock %}
