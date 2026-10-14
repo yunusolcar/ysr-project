@@ -1,6 +1,10 @@
 from django.contrib import admin
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 
-from .models import Answer, PsychologistNote, Question, Respondent, Section, TestSession
+from .models import PsychologistNote, Question, Respondent, Section, TestSession
+from .services import answers as answer_service
+from .services import report as report_service
 
 
 @admin.register(Section)
@@ -35,35 +39,6 @@ class RespondentAdmin(admin.ModelAdmin):
     search_fields = ("code",)
 
 
-class AnswerInline(admin.TabularInline):
-    """Oturum sayfasında cevapları soru sırasıyla, salt okunur gösterir."""
-
-    model = Answer
-    extra = 0
-    can_delete = False
-    fields = ("question_code", "question_text", "is_critical", "value", "text", "data")
-    readonly_fields = fields
-    ordering = ("question__order",)
-
-    def get_queryset(self, request):
-        return super().get_queryset(request).select_related("question")
-
-    def has_add_permission(self, request, obj=None):
-        return False
-
-    @admin.display(description="Kod")
-    def question_code(self, obj):
-        return obj.question.code
-
-    @admin.display(description="Soru")
-    def question_text(self, obj):
-        return obj.question.text[:80]
-
-    @admin.display(description="Kritik", boolean=True)
-    def is_critical(self, obj):
-        return obj.question.is_critical
-
-
 class NoteInline(admin.StackedInline):
     model = PsychologistNote
     extra = 1
@@ -75,18 +50,50 @@ class TestSessionAdmin(admin.ModelAdmin):
     list_display = (
         "respondent",
         "status",
+        "progress_display",
         "started_at",
         "completed_at",
         "has_critical",
     )
     list_filter = ("status",)
     search_fields = ("respondent__code",)
-    readonly_fields = ("id", "respondent", "started_at", "completed_at")
-    inlines = [NoteInline, AnswerInline]
+    fields = (
+        "respondent_info",
+        "status",
+        "started_at",
+        "completed_at",
+        "answer_report",
+    )
+    readonly_fields = fields
+    inlines = [NoteInline]
+
+    def has_add_permission(self, request):
+        # Oturumlar yalnızca API üzerinden açılır.
+        return False
+
+    @admin.display(description="İlerleme")
+    def progress_display(self, obj):
+        p = answer_service.progress(obj)
+        return f'{p["answered"]}/{p["total"]}'
 
     @admin.display(description="Kritik cevap", boolean=True)
     def has_critical(self, obj):
         return obj.answers.filter(question__is_critical=True, value__gt=0).exists()
+
+    @admin.display(description="Katılımcı")
+    def respondent_info(self, obj):
+        r = obj.respondent
+        parts = [r.code, r.get_gender_display(), f"{r.age} yaş"]
+        if r.grade:
+            parts.append(f"{r.grade}. sınıf")
+        return " · ".join(parts)
+
+    @admin.display(description="Sorular ve cevaplar")
+    def answer_report(self, obj):
+        html = render_to_string(
+            "ysr/session_report.html", report_service.build_report(obj)
+        )
+        return mark_safe(html)
 
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)

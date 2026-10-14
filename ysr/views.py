@@ -1,6 +1,5 @@
 from django.db import transaction
 from django.shortcuts import get_object_or_404
-from django.utils import timezone
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -94,25 +93,12 @@ def complete_session(request, session_id):
     """Eksik zorunlu soru yoksa oturumu tamamlandı olarak işaretler."""
     session = get_object_or_404(TestSession, pk=session_id)
 
-    if session.status == TestSession.Status.COMPLETED:
-        return Response(
-            {
-                "session_id": session.id,
-                "status": session.status,
-                "completed_at": session.completed_at,
-            }
-        )
-
-    missing = answer_service.missing_codes(session)
+    missing = answer_service.mark_completed(session)
     if missing:
         return Response(
             {"detail": "Some required questions are not answered.", "missing": missing},
             status=status.HTTP_400_BAD_REQUEST,
         )
-
-    session.status = TestSession.Status.COMPLETED
-    session.completed_at = timezone.now()
-    session.save(update_fields=["status", "completed_at"])
 
     return Response(
         {

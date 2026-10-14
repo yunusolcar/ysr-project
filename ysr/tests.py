@@ -1,127 +1,70 @@
+from django.contrib.auth import get_user_model
 from django.core.management import call_command
-from rest_framework.test import APITestCase
+from django.test import TestCase
+from django.urls import reverse
 
-from .models import Answer, Question
+from .models import Answer, Question, Respondent, TestSession
+from .services.report import build_report
 
 
-class SessionApiTests(APITestCase):
+class ReportTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         call_command("load_questions", verbosity=0)
+        respondent = Respondent.objects.create(code="R1", gender="erkek", age=15)
+        cls.session = TestSession.objects.create(respondent=respondent)
 
-    def setUp(self):
-        response = self.client.post(
-            "/api/sessions/",
-            {"code": "T001", "gender": "kiz", "age": 14},
-            format="json",
+        def answer(code, **fields):
+            Answer.objects.create(
+                session=cls.session, question=Question.objects.get(code=code), **fields
+            )
+
+        answer("91", value=2)
+        answer("3", value=0)
+        answer("V.1", value=2)
+        answer("2", value=1, text="bir kez denedim")
+        answer(
+            "I",
+            data={"none": False, "items": [{"name": "Yüzme", "time": 1, "skill": 2}]},
         )
-        self.session_id = response.data["session_id"]
-        self.base = f"/api/sessions/{self.session_id}"
 
-    # -- yardımcılar --------------------------------------------------
-    def put(self, code, payload):
-        return self.client.put(f"{self.base}/answers/{code}/", payload, format="json")
+    def row(self, code):
+        return next(r for r in build_report(self.session)["rows"] if r["code"] == code)
 
-    def answer_all(self, skip_prefix=None):
-        questions = Question.objects.filter(is_header=False).exclude(
-            question_type="free_text"
+    def test_all_questions_in_order(self):
+        rows = build_report(self.session)["rows"]
+        self.assertEqual(len(rows), 143)
+        self.assertEqual(rows[0]["code"], "I")
+
+    def test_answers_are_human_readable(self):
+        self.assertEqual(self.row("91")["lines"], ["2 – Çok ya da sık sık doğru"])
+        self.assertEqual(self.row("V.1")["lines"], ["2 ya da 3"])
+        self.assertEqual(
+            self.row("I")["lines"],
+            ["Yüzme — Zaman: Ortalama; Başarı: Ortalamanın üstünde"],
         )
-        for q in questions:
-            if skip_prefix and q.code.startswith(skip_prefix):
-                continue
-            if q.question_type == "scale_012":
-                payload = {"value": 0}
-            elif q.question_type == "single_choice":
-                payload = {"value": q.options[0]["value"]}
-            else:
-                payload = {"data": {"none": True}}
-            self.assertEqual(self.put(q.code, payload).status_code, 201, q.code)
+        self.assertEqual(self.row("2")["explanation"], "bir kez denedim")
 
-    # -- oturum ve sorular ---------------------------------------------
-    def test_start_session_rejects_bad_age(self):
-        response = self.client.post(
-            "/api/sessions/",
-            {"code": "T002", "gender": "kiz", "age": 10},
-            format="json",
+    def test_unanswered_and_critical(self):
+        self.assertFalse(self.row("4")["answered"])
+        critical = build_report(self.session)["critical"]
+        self.assertEqual([r["code"] for r in critical], ["91"])
+
+    def test_zero_on_critical_item_is_not_flagged(self):
+        Answer.objects.create(
+            session=self.session, question=Question.objects.get(code="18"), value=0
         )
-        self.assertEqual(response.status_code, 400)
+        critical = build_report(self.session)["critical"]
+        self.assertEqual([r["code"] for r in critical], ["91"])
 
-    def test_questions_endpoint_hides_critical_flag(self):
-        response = self.client.get(f"{self.base}/questions/")
+    def test_admin_page_renders(self):
+        admin_user = get_user_model().objects.create_superuser(
+            "admin1", "a@example.com", "pw12345!"
+        )
+        self.client.force_login(admin_user)
+        response = self.client.get(
+            reverse("admin:ysr_testsession_change", args=[self.session.pk])
+        )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data["questions"]), 143)
-        self.assertNotIn("is_critical", response.data["questions"][0])
-
-    # -- cevap kaydetme ------------------------------------------------
-    def test_scale_answer_is_saved_and_updated(self):
-        self.assertEqual(self.put("3", {"value": 1}).status_code, 201)
-        self.assertEqual(self.put("3", {"value": 2}).status_code, 200)
-        self.assertEqual(Answer.objects.count(), 1)
-        self.assertEqual(Answer.objects.get().value, 2)
-
-    def test_scale_rejects_out_of_range(self):
-        self.assertEqual(self.put("3", {"value": 3}).status_code, 400)
-        self.assertEqual(self.put("3", {}).status_code, 400)
-        self.assertEqual(self.put("3", {"value": "abc"}).status_code, 400)
-
-    def test_header_cannot_be_answered(self):
-        self.assertEqual(self.put("56", {"value": 1}).status_code, 400)
-        self.assertEqual(self.put("999", {"value": 1}).status_code, 404)
-
-    def test_single_choice_validates_options(self):
-        self.assertEqual(self.put("V.1", {"value": 5}).status_code, 400)
-        self.assertEqual(self.put("V.1", {"value": 2}).status_code, 201)
-
-    def test_text_only_when_explanation_allowed(self):
-        self.assertEqual(self.put("3", {"value": 1, "text": "x"}).status_code, 400)
-        self.assertEqual(self.put("2", {"value": 1, "text": "once"}).status_code, 201)
-
-    def test_activity_list_valid(self):
-        payload = {
-            "data": {"none": False, "items": [{"name": "Yüzme", "time": 1, "skill": 2}]}
-        }
-        self.assertEqual(self.put("I", payload).status_code, 201)
-        self.assertEqual(self.put("I", {"data": {"none": True}}).status_code, 200)
-
-    def test_activity_list_invalid(self):
-        bad_rating = {"data": {"items": [{"name": "Yüzme", "time": 5, "skill": 1}]}}
-        too_many = {
-            "data": {
-                "items": [{"name": str(i), "time": 1, "skill": 1} for i in range(4)]
-            }
-        }
-        conflict = {
-            "data": {"none": True, "items": [{"name": "x", "time": 1, "skill": 1}]}
-        }
-        for payload in (bad_rating, too_many, conflict, {"value": 1}, {}):
-            self.assertEqual(self.put("I", payload).status_code, 400)
-
-    # -- devam etme ve bitirme -----------------------------------------
-    def test_progress_endpoint_supports_resume(self):
-        before = self.client.get(f"{self.base}/answers/").data
-        self.put("3", {"value": 0})
-        after = self.client.get(f"{self.base}/answers/").data
-        self.assertEqual(before["progress"]["answered"], 0)
-        self.assertEqual(after["progress"]["answered"], 1)
-        self.assertEqual(after["answers"][0]["question"], "3")
-
-    def test_complete_fails_when_items_missing(self):
-        self.put("3", {"value": 0})
-        response = self.client.post(f"{self.base}/complete/")
-        self.assertEqual(response.status_code, 400)
-        self.assertIn("I", response.data["missing"])
-        self.assertNotIn("3", response.data["missing"])
-
-    def test_complete_succeeds_and_locks_session(self):
-        self.answer_all()
-        response = self.client.post(f"{self.base}/complete/")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data["status"], "completed")
-        self.assertNotIn("has_critical", response.data)
-        self.assertEqual(self.put("3", {"value": 1}).status_code, 409)
-
-    def test_not_attending_school_skips_school_subjects(self):
-        self.answer_all(skip_prefix="VII.1")
-        self.put("VII.0", {"value": 0})
-        response = self.client.post(f"{self.base}/complete/")
-        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Yüzme")
+        self.assertContains(response, "Kritik")

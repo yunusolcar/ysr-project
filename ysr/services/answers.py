@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
 from ysr.models import Answer, Question
@@ -148,3 +149,13 @@ def progress(session):
         "answered": required.filter(answers__session=session).count(),
         "total": required.count(),
     }
+
+
+def mark_completed(session):
+    """Eksik zorunlu soru yoksa oturumu tamamlar. Eksik soru kodlarını döndürür."""
+    missing = missing_codes(session)
+    if not missing and session.status != session.Status.COMPLETED:
+        session.status = session.Status.COMPLETED
+        session.completed_at = timezone.now()
+        session.save(update_fields=["status", "completed_at"])
+    return missing

@@ -1,0 +1,86 @@
+<style>
+  .ysr-report {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .ysr-report th,
+  .ysr-report td {
+    padding: 4px 8px;
+    vertical-align: top;
+    text-align: left;
+  }
+  .ysr-report th.code {
+    width: 70px;
+  }
+  .ysr-report th.answer {
+    width: 38%;
+  }
+  .ysr-report tr.critical {
+    background: rgba(186, 33, 33, 0.12);
+  }
+  .ysr-report tr.child td.q-text {
+    padding-left: 28px;
+  }
+  .ysr-report tr.header td {
+    font-weight: bold;
+    padding-top: 10px;
+  }
+  .ysr-report tr.section td {
+    padding-top: 18px;
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  .ysr-report .muted {
+    opacity: 0.5;
+  }
+  .ysr-alert {
+    border: 2px solid #ba2121;
+    border-radius: 4px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+  }
+  .ysr-alert strong {
+    color: #ba2121;
+  }
+</style>
+
+{% if critical %}
+<div class="ysr-alert">
+  <strong>⚠ Dikkat: kritik maddelerde 1 veya 2 işaretlenmiş</strong>
+  <ul>
+    {% for r in critical %}
+    <li><b>{{ r.code }}.</b> {{ r.text }} → <b>{{ r.answer }}</b></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+<table class="ysr-report">
+  <thead>
+    <tr>
+      <th class="code">Kod</th>
+      <th>Soru</th>
+      <th class="answer">Cevap</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in rows %} {% ifchanged r.section %}
+    <tr class="section">
+      <td colspan="3">{{ r.section }}</td>
+    </tr>
+    {% endifchanged %}
+    <tr class="{{ r.css }}">
+      <td>{{ r.code }}</td>
+      <td class="q-text">{{ r.text }}</td>
+      <td>
+        {% if r.answered %} {{ r.answer|linebreaksbr }} {% elif not r.is_header
+        %}
+        <span class="muted">— cevaplanmadı —</span>
+        {% endif %} {% if r.explanation %}
+        <br /><em>Açıklama: {{ r.explanation }}</em>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
