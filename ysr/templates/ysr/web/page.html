@@ -1,133 +1,151 @@
-{% extends "ysr/web/base.html" %} {% block content %}
-<p class="muted">
-  Sayfa {{ page_number }} / {{ total_pages }} · {{ progress.answered }} / {{
-  progress.total }} soru cevaplandı
-</p>
-<div class="progress"><div style="width: {{ percent }}%"></div></div>
+{% extends "ysr/web/base.html" %}
+{% block content %}
+<div class="page-head">
+  <div class="eyebrow">
+    Sayfa {{ page_number }} / {{ total_pages }} ·
+    {{ progress.answered }} / {{ progress.total }} soru cevaplandı
+  </div>
+  <div class="progress"><div style="width: {{ percent }}%"></div></div>
+  <h2>{{ title }}</h2>
+  {% if instructions %}
+  <p class="lead">{{ instructions }}</p>
+  {% endif %}
+</div>
 
-<h2>{{ title }}</h2>
-{% if instructions %}
-<p>{{ instructions }}</p>
-{% endif %} {% if has_scale %}
+{% if has_scale %}
 <p class="legend">
-  <b>0</b> = Doğru değil &nbsp;·&nbsp; <b>1</b> = Biraz ya da bazen doğru
-  &nbsp;·&nbsp; <b>2</b> = Çok ya da sık sık doğru
+  <b>0</b> = Doğru değil &nbsp;·&nbsp;
+  <b>1</b> = Biraz ya da bazen doğru &nbsp;·&nbsp;
+  <b>2</b> = Çok ya da sık sık doğru
 </p>
-{% endif %} {% if error_count %}
-<p class="error">
-  Cevaplanmamış ya da hatalı sorular var. Kırmızı çizgili soruları kontrol et.
+{% endif %}
+{% if error_count %}
+<p class="alert">
+  Cevaplanmamış ya da hatalı sorular var.
+  Kırmızı işaretli soruları kontrol et.
 </p>
 {% endif %}
 
 <form method="post">
-  {% csrf_token %} {% for c in cards %} {% if c.header %}
-  <p class="q-header">
-    {% if c.show_code %}<span class="code">{{ c.code }}.</span>{% endif %}{{
-    c.text }}
-  </p>
-  {% else %}
-  <div
-    class="q {% if c.depth %}child{% endif %} {% if c.error %}has-error{% endif %}"
-  >
-    <p class="q-text">
-      {% if c.show_code %}<span class="code">{{ c.code }}.</span>{% endif %}{{
-      c.text }}
-    </p>
-
-    {% if c.kind == "scale" or c.kind == "choice" %}
-    <div class="choices">
-      {% for ch in c.choices %}
-      <label
-        ><input
-          type="radio"
-          name="{{ c.field }}_value"
-          value="{{ ch.value }}"
-          {%
-          if
-          ch.checked
-          %}checked{%
-          endif
-          %}
-        /><span>{{ ch.label }}</span></label
-      >
-      {% endfor %}
-    </div>
-    {% if c.explain %}<input
-      type="text"
-      name="{{ c.field }}_text"
-      value="{{ c.text_value }}"
-      placeholder="Açıklamak istersen yaz"
-      maxlength="2000"
-    />{% endif %} {% elif c.kind == "text" %}
-    <textarea name="{{ c.field }}_text" rows="4" maxlength="2000">
-{{ c.text_value }}</textarea
-    >
-
-    {% elif c.kind == "list" %}
-    <label
-      ><input
-        type="checkbox"
-        name="{{ c.field }}_none"
-        {%
-        if
-        c.none
-        %}checked{%
-        endif
-        %}
-      />
-      Hiçbiri</label
-    >
-    {% for row in c.rows %}
-    <fieldset class="row">
-      <input
-        type="text"
-        name="{{ row.name_field }}"
-        value="{{ row.name }}"
-        placeholder="{{ row.index }}. yazmak istersen buraya"
-        maxlength="100"
-      />
-      <div class="selects">
-        {% for s in row.selects %}
-        <label
-          >{{ s.label }}
-          <select name="{{ s.field }}">
-            <option value="">Seç</option>
-            {% for o in s.options %}
-            <option
-              value="{{ o.value }}"
-              {%
-              if
-              o.selected
-              %}selected{%
-              endif
-              %}
-            >
-              {{ o.label }}
-            </option>
-            {% endfor %}
-          </select>
-        </label>
-        {% endfor %}
+  {% csrf_token %}
+  <div class="card">
+  {% for c in cards %}
+    {% if c.header %}
+      <div class="q-header">
+        {% if c.show_code %}<span class="code">{{ c.code }}.</span>{% endif %}
+        {{ c.text }}
       </div>
-    </fieldset>
-    {% endfor %} {% endif %} {% if c.error %}
-    <p class="error">{{ c.error }}</p>
+    {% else %}
+      <div class="q k-{{ c.kind }}{% if c.depth %} child{% endif %}{% if c.error %} has-error{% endif %}">
+        <p class="q-text">
+          {% if c.show_code %}<span class="code">{{ c.code }}.</span>{% endif %}
+          {{ c.text }}
+        </p>
+
+        {% if c.kind == "scale" or c.kind == "choice" %}
+          <div class="choices">
+            {% for ch in c.choices %}
+            <label>
+              <input type="radio" name="{{ c.field }}_value"
+                value="{{ ch.value }}"
+                {% if ch.checked %}checked{% endif %}>
+              <span>{{ ch.label }}</span>
+            </label>
+            {% endfor %}
+          </div>
+          {% if c.explain %}
+          <input type="text" class="explain" name="{{ c.field }}_text"
+            value="{{ c.text_value }}"
+            placeholder="Açıklamak istersen yaz" maxlength="2000">
+          {% endif %}
+
+        {% elif c.kind == "text" %}
+          <textarea name="{{ c.field }}_text" rows="4"
+            maxlength="2000">{{ c.text_value }}</textarea>
+
+        {% elif c.kind == "list" %}
+          <p class="muted">
+            Her satıra bir tane yaz, sonra o satırdaki seçenekleri işaretle.
+            Yazacak bir şey yoksa "Hiçbiri"ni işaretle.
+          </p>
+          <label class="none-box">
+            <input type="checkbox" name="{{ c.field }}_none"
+              {% if c.none %}checked{% endif %}>
+            Hiçbiri (yazacak bir şeyim yok)
+          </label>
+          <div class="alist" style="--cols: {{ c.columns|length }}">
+            <div class="ahead"></div>
+            <div class="ahead">{{ c.item_label }}</div>
+            {% for col in c.columns %}
+            <div class="ahead">{{ col.label }}</div>
+            {% endfor %}
+            {% for row in c.rows %}
+            <div class="aletter">{{ row.letter }}.</div>
+            <input type="text" name="{{ row.name_field }}"
+              data-row="{{ row.index }}"
+              value="{{ row.name }}" maxlength="100"
+              aria-label="{{ c.item_label }} {{ row.letter }}"
+              placeholder="Buraya yaz">
+            {% for s in row.selects %}
+            <label class="asel">
+              <span class="short">{{ s.short }}</span>
+              <select name="{{ s.field }}" data-row="{{ row.index }}"
+                title="Önce satırın adını yaz"
+                aria-label="{{ s.label }}">
+                <option value="">Seç</option>
+                {% for o in s.options %}
+                <option value="{{ o.value }}"
+                  {% if o.selected %}selected{% endif %}>
+                  {{ o.label }}
+                </option>
+                {% endfor %}
+              </select>
+            </label>
+            {% endfor %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if c.error %}<p class="error">{{ c.error }}</p>{% endif %}
+      </div>
     {% endif %}
+  {% endfor %}
   </div>
-  {% endif %} {% endfor %}
 
   <div class="nav">
     <button class="btn" type="submit">
       {% if is_last %}Testi bitir{% else %}Devam →{% endif %}
     </button>
-    {% if has_back %}<button
-      class="btn secondary"
-      type="submit"
-      name="nav"
-      value="prev"
-    >
-      ← Geri</button
-    >{% endif %}
+    {% if has_back %}
+    <button class="btn secondary" type="submit"
+      name="nav" value="prev">← Geri</button>
+    {% endif %}
   </div>
 </form>
+
+<script>
+  document.querySelectorAll(".alist").forEach(function (list) {
+    var q = list.closest(".q");
+    var none = q.querySelector(".none-box input");
+    var names = list.querySelectorAll("input[type=text]");
+
+    function sync() {
+      var off = !!(none && none.checked);
+      list.classList.toggle("is-off", off);
+      names.forEach(function (input) {
+        var row = input.dataset.row;
+        var filled = input.value.trim() !== "";
+        input.disabled = off;
+        list.querySelectorAll('select[data-row="' + row + '"]').forEach(function (sel) {
+          sel.disabled = off || !filled;
+          if (!off && !filled) { sel.value = ""; }
+        });
+      });
+    }
+
+    names.forEach(function (input) { input.addEventListener("input", sync); });
+    if (none) { none.addEventListener("change", sync); }
+    sync();
+  });
+</script>
 {% endblock %}

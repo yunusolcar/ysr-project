@@ -1,12 +1,16 @@
-{% extends "ysr/web/base.html" %} {% block content %}
+{% extends "ysr/web/base.html" %}
+{% block content %}
 <h1>Gençler İçin Kendini Değerlendirme Anketi</h1>
-<p>
+<p class="lead">
   Bu anket 11-18 yaş arasındaki gençlerin kendilerini anlatması için hazırlandı.
-  Doğru ya da yanlış cevap yok, sana en uygun olanı işaretle. Gerçek adını
-  yazma, sana verilen kodu ya da bir takma ad kullan.
+  Doğru ya da yanlış cevap yok, sana en uygun olanı işaretle.
+  Gerçek adını yazma, sana verilen kodu ya da bir takma ad kullan.
 </p>
-<form method="post">
-  {% csrf_token %} {{ form.as_div }}
-  <div class="nav"><button class="btn" type="submit">Başla</button></div>
-</form>
+<div class="card pad" style="margin-top: 16px">
+  <form method="post" class="start-form">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <div class="actions"><button class="btn" type="submit">Başla</button></div>
+  </form>
+</div>
 {% endblock %}
