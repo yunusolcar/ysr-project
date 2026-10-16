@@ -16,6 +16,9 @@ MAX_TEXT = 2000
 MSG_INVALID = "Bu cevap geçerli görünmüyor. Lütfen tekrar dene."
 MSG_LIST = "Yazdığın her satır için bütün seçenekleri işaretle."
 MSG_MISSING = "Bu soruyu cevaplamayı unutma."
+MSG_ORPHAN = "Seçim yaptığın satırın adını da yaz."
+SHORT_NAMES = {"time": "Zaman", "skill": "Başarı", "active": "Aktiflik", "grade": "Başarı"}
+LETTERS = "abcdefgh"
 
 
 def _prefix(question):
@@ -57,6 +60,16 @@ def _rows_from_saved(question, answer):
     return rows
 
 
+def _has_orphan_rating(question, post):
+    """Adı yazılmamış bir satırda seçim yapılmış mı?"""
+    for row in _rows_from_post(question, post):
+        if row["name"]:
+            continue
+        if any(row[r["key"]] != "" for r in question.options["ratings"]):
+            return True
+    return False
+
+
 def parse_payload(question, post):
     """Formdan gelen veriyi API'deki cevap biçimine çevirir. Boşsa None döner."""
     prefix = _prefix(question)
@@ -77,8 +90,11 @@ def parse_payload(question, post):
 
     if qtype == Type.ACTIVITY_LIST:
         none = post.get(f"{prefix}_none") == "on"
+        if none:
+            # "Hiçbiri" işaretliyse satırlara yazılanlar yok sayılır.
+            return {"data": {"none": True, "items": []}}
         filled = [row for row in _rows_from_post(question, post) if row["name"]]
-        if not none and not filled:
+        if not filled:
             return None
         items = []
         for row in filled:
@@ -101,6 +117,11 @@ def save_page(session, questions, post):
     for question in questions:
         if question.is_header:
             continue
+        if question.question_type == Type.ACTIVITY_LIST:
+            none = post.get(f"{_prefix(question)}_none") == "on"
+            if not none and _has_orphan_rating(question, post):
+                errors[question.id] = MSG_ORPHAN
+                continue
         payload = parse_payload(question, post)
         if payload is None:
             # Serbest metin boşaltıldıysa eski cevabı sil.
@@ -142,6 +163,7 @@ def _row_cards(question, prefix, rows):
                 {
                     "field": f"{prefix}_{rating['key']}{i}",
                     "label": rating["label"],
+                    "short": SHORT_NAMES.get(rating["key"], rating["key"]),
                     "options": [
                         {
                             "value": c["value"],
@@ -155,6 +177,7 @@ def _row_cards(question, prefix, rows):
         cards.append(
             {
                 "index": i + 1,
+                "letter": LETTERS[i],
                 "name_field": f"{prefix}_name{i}",
                 "name": row["name"],
                 "selects": selects,
@@ -216,4 +239,9 @@ def build_cards(questions, answers, errors, post):
                 card["none"] = bool(data.get("none"))
                 rows = _rows_from_saved(question, answer)
             card["rows"] = _row_cards(question, prefix, rows)
+            card["item_label"] = question.options["item_label"]
+            card["columns"] = [
+                {"label": r["label"], "short": SHORT_NAMES.get(r["key"], r["key"])}
+                for r in question.options["ratings"]
+            ]
     return cards

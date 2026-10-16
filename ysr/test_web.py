@@ -91,6 +91,23 @@ class WebFlowTests(TestCase):
         self.assertContains(response, "bütün seçenekleri")
         self.assertEqual(Answer.objects.count(), 0)
 
+    def test_none_checked_ignores_row_text(self):
+        question = build_pages()[0]["questions"][0]
+        field = f"q{question.id}"
+        data = {f"{field}_none": "on", f"{field}_name0": "Yüzme"}
+        response = self.client.post(self.page_url(0), data)
+        self.assertRedirects(response, self.page_url(1))
+        answer = Answer.objects.get(question=question)
+        self.assertEqual(answer.data, {"none": True, "items": []})
+
+    def test_rating_without_name_is_rejected(self):
+        question = build_pages()[0]["questions"][0]
+        field = f"q{question.id}"
+        response = self.client.post(self.page_url(0), {f"{field}_time0": "1"})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "adını da yaz")
+        self.assertEqual(Answer.objects.count(), 0)
+
     def test_back_button_goes_to_previous_page(self):
         response = self.client.post(self.page_url(1), {"nav": "prev"})
         self.assertRedirects(response, self.page_url(0))
